@@ -18,6 +18,6 @@ The publisher uses a fine-grained token scoped to this repository with Contents 
 
 ## Preview behaviour
 
-loader.js fetches JSON without credentials, creates DOM text nodes and canonical article links, inserts at most six cards, then loads the official Substack embed script once. No undocumented reinitialization method is used. Dynamic rendering and cross-origin access require live validation after Pages activation and feed publication. Existing Substack script instances are detected but not reloaded. The hosted preview isolates the test from other Squarespace scripts.
+loader.js fetches JSON without credentials and creates at most six official Substack embed iframes using the URL protocol in the user-supplied embed.js source. It does not load embed.js, whose shared global regular expression skips alternating posts. Frame height messages require matching origin/source and a bounded numeric height. Accessible article text/links remain until a valid height message. Renderer v2 still requires live visual acceptance; see docs/embed-alternation-2026-09-29.md.
 
 Publication is atomic at the Git file-update level. Pages deployment and caching are separate and may lag behind the commit. The publisher stops on missing prior articles/tags, an API error or a concurrent update rather than infer deletions from incomplete collection. Scheduled refresh and production carousel integration remain disabled.

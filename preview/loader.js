@@ -27,22 +27,52 @@
     .then(function(body){if(body.length>500000)throw Error('feed_too_large');return validate(JSON.parse(body));})
     .then(function(feed){
       if(!feed.ready){status.textContent='Hosting is ready. No collected articles have been published yet.';return;}
+      // Source-confirmed 2026-09-29: embed.js reuses a global RegExp.exec across
+      // URLs, skipping alternating cards. Use its iframe URL protocol directly.
+      root.dataset.renderer='direct-iframe-v2';
+      var style=document.createElement('style');
+      style.textContent='[data-affiniti-embed-preview] .affiniti-embed-test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:24px;align-items:start}[data-affiniti-embed-preview] .affiniti-embed-test-grid>div{min-width:0;width:100%;max-width:500px}[data-affiniti-embed-preview] iframe{display:block;width:100%;border:0}';
+      root.appendChild(style);
       var grid=document.createElement('div');grid.className='affiniti-embed-test-grid';
-      feed.articles.slice(0,6).forEach(function(p){
-        var cell=document.createElement('div'),card=document.createElement('div');card.className='substack-post-embed';
-        var title=text('p',p.title+' by '+p.authors.join(', '));title.lang='en-gb';card.appendChild(title);
-        if(p.subtitle)card.appendChild(text('p',p.subtitle));
-        var link=text('a','Read on Substack');link.setAttribute('data-post-link','');link.href=p.canonical_url;card.appendChild(link);
-        cell.appendChild(card);grid.appendChild(cell);
-      });root.appendChild(grid);
-      status.textContent='Loaded '+feed.articles.length+' articles and '+feed.tags.length+' tags; showing '+Math.min(6,feed.articles.length)+'. Loading Substack rendering…';
-      if(document.querySelector('script[src="https://substack.com/embedjs/embed.js"]')){
-        status.textContent+=' Substack script already exists: inspect rendering or use the isolated hosted preview.';return;
+      var entries=[],selected=feed.articles.slice(0,6);
+      function report(){
+        var confirmed=entries.filter(function(e){return e.confirmed;}).length;
+        status.textContent='Renderer v2: '+entries.length+' embed frames created from '+feed.articles.length+
+          ' articles / '+feed.tags.length+' tags; '+confirmed+'/'+entries.length+
+          ' frames reported content height. Check visual rendering; collection coverage remains incomplete.';
       }
-      var script=document.createElement('script');script.src='https://substack.com/embedjs/embed.js';script.async=true;script.charset='utf-8';
-      script.onload=function(){status.textContent='Feed loaded and Substack script loaded. Check card rendering visually; collection coverage remains incomplete.';};
-      script.onerror=function(){status.textContent='Feed loaded; Substack rendering unavailable. Article links remain usable.';};
-      document.head.appendChild(script);
+      function onMessage(event){
+        if(!root.isConnected){window.removeEventListener('message',onMessage);return;}
+        entries.forEach(function(entry){
+          if(event.origin!==entry.origin||event.source!==entry.frame.contentWindow)return;
+          var value=event.data&&event.data.iframeHeight;
+          if(typeof value!=='number'&&typeof value!=='string')return;
+          if(typeof value==='string'&&!/^\d+(?:\.\d+)?$/.test(value))return;
+          var height=Number(value);
+          if(!Number.isFinite(height)||height<100||height>10000)return;
+          entry.frame.height=String(Math.ceil(height));
+          entry.fallback.hidden=true;entry.confirmed=true;report();
+        });
+      }
+      window.addEventListener('message',onMessage);
+      selected.forEach(function(p){
+        var cell=document.createElement('div'),fallback=document.createElement('div');
+        var title=text('p',p.title+' by '+p.authors.join(', '));title.lang='en-gb';fallback.appendChild(title);
+        if(p.subtitle)fallback.appendChild(text('p',p.subtitle));
+        var link=text('a','Read on Substack');link.href=p.canonical_url;fallback.appendChild(link);
+        var postURL=new URL(p.canonical_url),frameURL=new URL('/embed'+postURL.pathname,postURL.origin);
+        frameURL.searchParams.set('origin',window.location.origin);
+        // Keep host-page query parameters and fragments out of third-party URLs.
+        frameURL.searchParams.set('fullURL',window.location.origin+window.location.pathname);
+        var frame=document.createElement('iframe');
+        frame.title='Substack article: '+p.title;frame.height='470';frame.scrolling='no';
+        frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups');
+        frame.setAttribute('allow','clipboard-write');
+        frame.referrerPolicy='strict-origin-when-cross-origin';
+        entries.push({frame:frame,origin:postURL.origin,fallback:fallback,confirmed:false});
+        frame.src=frameURL.toString();cell.appendChild(frame);cell.appendChild(fallback);grid.appendChild(cell);
+      });
+      root.appendChild(grid);report();
     }).catch(function(){status.textContent='The preview feed could not be loaded. Check Pages deployment, feed publication and browser network diagnostics.';})
     .finally(function(){clearTimeout(timer);});
 })();
