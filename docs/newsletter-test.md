@@ -61,3 +61,11 @@ tabs. Use the same account owning stored UserProperties and the Gmail mailbox.
 Target 08:30/20:30 Europe/London. Apps Script nearMinute(30) has +/-15-minute
 precision (Google ClockTriggerBuilder documentation); it is not exact-minute delivery.
 Scheduling, notification sends and production-page replacement remain pending.
+
+## Verification
+
+Node renderer regression checks passed. The published feed groups into seven
+nonempty series with 25 posts. Hosted browser inspection confirmed seven series,
+newest/oldest sorting, reader opening, Escape closing, restored tile focus and zero
+iframes after close. Official card rendering on the Squarespace test page and mobile
+layout still require user acceptance. Production and scheduling were not changed.

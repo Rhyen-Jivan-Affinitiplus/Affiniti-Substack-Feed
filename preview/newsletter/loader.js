@@ -30,7 +30,7 @@ try{
  const descriptions={"mind-the-gap": "A series about the gap between what we intend to do and what our minds actually do \u2014 why change feels impossible, why one insult can outweigh five compliments, and why self-criticism persists even when it does not work.", "agency": "A series that unpicks why you cannot manifest your way back into control, and what actually restores it.", "the-psychology-of-psychologists": "A series that goes behind the training: what it takes to become a clinical psychologist, and what the job does to you once you are one."};
  const SERIES_DATA=feed.tags.map(t=>{
    const posts=feed.articles.filter(p=>p.tag_ids.includes(t.id)).map(p=>({id:p.id,title:p.title,summary:p.subtitle,url:p.canonical_url,time:Date.parse(p.published_at)})).sort((a,b)=>b.time-a.time||a.id-b.id);
-   return {id:t.id,name:t.name,description:descriptions[t.slug]||'',period:'',status:posts.length+' articles',colours:{a:'#4a2824',b:'#2a1613',accent:'#e5d6b2',soft:'rgba(229,214,178,.13)'},posts};
+   return {id:t.id,name:t.name,description:descriptions[t.slug]||'',period:'Collected articles',status:posts.length+' articles',colours:{a:'#4a2824',b:'#2a1613',accent:'#e5d6b2',soft:'rgba(229,214,178,.13)'},posts};
  }).filter(s=>s.posts.length).sort((a,b)=>b.posts[0].time-a.posts[0].time||a.name.localeCompare(b.name,'en'));
  if(!SERIES_DATA.length)throw Error('no_series');
  if(document.querySelector('#nl-s02'))throw Error('duplicate_component');
@@ -286,6 +286,7 @@ try{
         modalComments.href = `${post.url}#comments`;
         renderModalTimeline(series);
         renderSubstackEmbed(post);
+        root.inert=true;
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.documentElement.classList.add('nl-modal-open');
@@ -295,6 +296,8 @@ try{
       const closeModal = () => {
         clearTimeout(embedTimer);
         modalEmbedHost.replaceChildren();
+        currentFrame=null;
+        root.inert=false;
         returnFocus?.focus();
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
