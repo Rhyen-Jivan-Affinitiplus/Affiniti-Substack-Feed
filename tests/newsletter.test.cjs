@@ -1,0 +1,20 @@
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+const js=fs.readFileSync('preview/newsletter/loader.js','utf8');
+const template=fs.readFileSync('preview/newsletter/template.html','utf8');
+const validate=js.slice(js.indexOf('  function validate'),js.indexOf('async function get'));
+const transform=js.slice(js.indexOf(' const descriptions='),js.indexOf(" if(!SERIES_DATA.length)"));
+function group(feed){return vm.runInNewContext(validate+'\nvalidate(feed);\n'+transform+'\nJSON.stringify(SERIES_DATA)',{feed,Set,Date});}
+const p=(id,tags,date)=>({id,title:'Post '+id,subtitle:'<script>text</script>',canonical_url:'https://affinitiplus.substack.com/p/post-'+id,authors:['Affiniti+'],tag_ids:tags,published_at:date});
+const feed={schema_version:1,mode:'display_preview',ready:true,tags:[{id:'a',name:'Existing',slug:'existing'},{id:'b',name:'New',slug:'new'},{id:'c',name:'Empty',slug:'empty'}],articles:[p(1,['a'],'2026-01-01'),p(2,['a','b'],'2026-02-01')]};
+let groups=JSON.parse(group(feed));
+assert.equal(groups.length,2);assert.equal(groups[0].posts[0].id,2);
+assert.equal(groups.reduce((n,s)=>n+s.posts.length,0),3);
+feed.articles[0].canonical_url='javascript:alert(1)';
+assert.throws(()=>group(feed));
+assert(!template.includes('<script'));
+assert(!js.includes('embedjs/embed.js'));
+assert(!js.includes('length: 6'));
+assert(js.includes('event.source!==currentFrame.contentWindow'));
+assert(js.includes('panel.inert=i!==activeSeries'));
+assert(js.includes('modalEmbedHost.replaceChildren();'));
+console.log('Newsletter grouping, URL rejection, dynamic membership and renderer checks passed.');
