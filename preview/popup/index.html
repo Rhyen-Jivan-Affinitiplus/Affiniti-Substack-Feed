@@ -1,0 +1,244 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Affiniti+ newsletter popup</title><body style="margin:0;padding:clamp(16px,4vw,60px);background:#f4ecdd"><!-- Affiniti+ newsletter popup v3. One Squarespace HTML Code Block. -->
+<section id="nl-popup" aria-label="Affiniti+ newsletter">
+  <header class="nlp-intro">
+    <div><p class="nlp-kicker">Explore one idea from every angle.</p><h2>Newsletter series</h2></div>
+    <button type="button" data-nlp-browse disabled>Explore series <span aria-hidden="true">↗</span></button>
+  </header>
+  <p data-nlp-status role="status">Loading newsletter collection…</p>
+  <nav class="nlp-series" aria-label="Newsletter series" data-nlp-series></nav>
+  <div class="nlp-latest" data-nlp-latest></div>
+  <p class="nlp-fallback"><a href="https://affinitiplus.substack.com/archive" target="_blank" rel="noopener">Browse all articles on Substack ↗</a>
+    <button type="button" data-nlp-retry hidden>Try loading again</button></p>
+  <dialog aria-labelledby="nlp-title" class="nlp-dialog">
+    <div class="nlp-shell">
+      <header class="nlp-toolbar">
+        <button type="button" data-nlp-back hidden>← Series</button>
+        <span class="nlp-kicker">An Affiniti for Psychology</span>
+        <button type="button" data-nlp-close aria-label="Close newsletter popup">Close <span aria-hidden="true">×</span></button>
+      </header>
+      <div class="nlp-content">
+        <section data-nlp-series-view>
+          <div class="nlp-view-heading">
+            <div><p class="nlp-kicker">The collection</p><h2 id="nlp-title" tabindex="-1">Newsletter series</h2></div>
+            <label>Article order <select data-nlp-order><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label>
+          </div>
+          <nav class="nlp-series" aria-label="Choose a series" data-nlp-tabs></nav>
+          <p class="nlp-count" data-nlp-count></p>
+          <div class="nlp-grid" data-nlp-grid></div>
+        </section>
+        <article data-nlp-article-view hidden aria-labelledby="nlp-article-title">
+          <p class="nlp-kicker" data-nlp-position></p>
+          <figure class="nlp-hero" data-nlp-hero hidden>
+            <img data-nlp-image alt="" decoding="async" referrerpolicy="no-referrer">
+            <figcaption><h2 data-nlp-overlay-title></h2></figcaption>
+          </figure>
+          <header class="nlp-article-head">
+            <h2 id="nlp-article-title" tabindex="-1"></h2>
+            <p class="nlp-meta"><span data-nlp-authors></span><time data-nlp-date></time></p>
+          </header>
+          <p class="nlp-summary" data-nlp-summary></p>
+          <div class="nlp-embed" data-nlp-embed></div>
+          <p class="nlp-count" data-nlp-embed-status role="status"></p>
+          <ul class="nlp-tags" aria-label="Article series" data-nlp-tags></ul>
+          <div class="nlp-actions"><a class="nlp-primary" data-nlp-read target="_blank" rel="noopener">Read on Substack ↗</a><a href="https://affinitiplus.substack.com/subscribe" target="_blank" rel="noopener">Subscribe ↗</a></div>
+          <nav class="nlp-post-nav" aria-label="Articles"><button type="button" data-nlp-prev>← Previous article</button><button type="button" data-nlp-next>Next article →</button></nav>
+        </article>
+      </div>
+    </div>
+  </dialog>
+</section>
+<style>
+#nl-popup{
+ --nlp-ink:var(--nl-cocoa,#4a2824);--nlp-paper:var(--nl-paper,#fffaf7);
+ --nlp-cream:var(--ap-control-bg,#e5d6b2);--nlp-line:rgba(74,40,36,.2);
+ color:var(--nlp-ink);font-family:"Proxima Nova",Arial,Helvetica,sans-serif;
+ width:100%;isolation:isolate;text-align:left;
+}
+#nl-popup *,#nl-popup *::before,#nl-popup *::after{box-sizing:border-box}
+#nl-popup [hidden]{display:none!important}
+#nl-popup h2,#nl-popup h3{font-family:"Adonis",Georgia,serif;font-weight:400;text-transform:none;letter-spacing:0;text-align:left;hyphens:none;word-break:normal;overflow-wrap:normal}
+#nl-popup h2{font-size:var(--nl-section-title-size,clamp(2rem,3.2vw,3.6rem));line-height:1.12;margin:0}
+#nl-popup h3{font-size:clamp(1.35rem,2vw,1.8rem);line-height:1.25;margin:0}
+#nl-popup p{margin:0}
+#nl-popup a{color:inherit;text-underline-offset:.22em}
+#nl-popup button,#nl-popup select,#nl-popup .nlp-primary{
+ font:inherit;color:inherit;border:1px solid var(--nlp-line);border-radius:12px;
+ padding:12px 16px;min-height:44px;background:transparent;cursor:pointer;line-height:1.4;
+}
+#nl-popup button:disabled{opacity:.45;cursor:default}
+#nl-popup :focus-visible{outline:3px solid var(--nlp-ink);outline-offset:4px}
+#nl-popup button,#nl-popup a{touch-action:manipulation}
+#nl-popup button:hover:not(:disabled),#nl-popup button:active{background:var(--nlp-cream)}
+#nl-popup .nlp-intro{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}
+#nl-popup .nlp-kicker{font-size:.75rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1.5;margin-bottom:12px}
+#nl-popup .nlp-series{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+#nl-popup .nlp-series button{border-radius:100px;font-size:.9rem}
+#nl-popup .nlp-series button[aria-pressed="true"]{background:var(--nlp-ink);color:var(--nlp-paper)}
+#nl-popup .nlp-latest,#nl-popup .nlp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+#nl-popup .nlp-tile{display:flex;flex-direction:column;align-items:start;gap:18px;text-align:left;padding:24px;background:var(--nlp-paper);border-radius:18px;transition:transform 220ms ease,background 220ms ease}
+#nl-popup .nlp-tile:hover{transform:translateY(-3px)}
+#nl-popup .nlp-tile .nlp-tile-link{margin-top:auto;font-size:.85rem;font-weight:700}
+#nl-popup .nlp-count,#nl-popup .nlp-meta,#nl-popup .nlp-fallback{font-size:.9rem;line-height:1.6}
+#nl-popup .nlp-fallback{margin-top:24px}
+#nl-popup .nlp-dialog{width:min(1120px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;border:1px solid var(--nlp-line);border-radius:24px;color:var(--nlp-ink);background:var(--nlp-paper);box-shadow:0 28px 100px rgba(42,22,19,.3);overflow:auto}
+#nl-popup .nlp-dialog::backdrop{background:rgba(42,22,19,.7);backdrop-filter:blur(8px)}
+#nl-popup .nlp-dialog[open]{animation:nlp-enter 260ms cubic-bezier(.16,1,.3,1)}
+@keyframes nlp-enter{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+#nl-popup .nlp-toolbar{display:flex;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid var(--nlp-line)}
+#nl-popup .nlp-toolbar .nlp-kicker{margin:0;flex:1}
+#nl-popup .nlp-content{padding:clamp(20px,4vw,44px)}
+#nl-popup .nlp-view-heading{display:flex;align-items:end;justify-content:space-between;gap:24px}
+#nl-popup .nlp-view-heading label{display:flex;flex-direction:column;gap:8px;font-size:.85rem}
+#nl-popup .nlp-grid{margin-top:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#nl-popup .nlp-hero{position:relative;margin:16px 0 24px;overflow:hidden;border-radius:18px;background:var(--nlp-ink);display:grid;isolation:isolate}
+#nl-popup .nlp-hero img{grid-area:1/1;width:100%;height:100%;min-height:320px;max-height:540px;object-fit:cover}
+#nl-popup .nlp-hero figcaption{grid-area:1/1;align-self:stretch;display:flex;align-items:end;padding:clamp(24px,4vw,44px);background:linear-gradient(0deg,rgba(24,12,10,.93),rgba(24,12,10,.1) 85%);color:#fffaf7}
+#nl-popup .nlp-meta{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:18px}
+#nl-popup .nlp-summary{font-size:1.1rem;line-height:1.8;max-width:70ch;margin:22px 0}
+#nl-popup .nlp-embed{max-width:500px;margin:24px auto 0}
+#nl-popup .nlp-embed iframe{display:block;width:100%;border:0;border-radius:16px;background:white}
+#nl-popup .nlp-tags{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none;margin:24px 0}
+#nl-popup .nlp-tags li{font-size:.8rem;border:1px solid var(--nlp-line);padding:6px 12px;border-radius:100px}
+#nl-popup .nlp-actions,#nl-popup .nlp-post-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--nlp-line);padding-top:24px;margin-top:24px}
+#nl-popup .nlp-primary{display:inline-flex;align-items:center;background:var(--nlp-cream);text-decoration:none;font-weight:700}
+#nl-popup .nlp-sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:700px){
+ #nl-popup .nlp-intro,#nl-popup .nlp-view-heading{align-items:start;flex-direction:column}
+ #nl-popup .nlp-latest,#nl-popup .nlp-grid{grid-template-columns:1fr}
+ #nl-popup .nlp-dialog{width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:18px}
+ #nl-popup .nlp-toolbar{padding:12px;flex-wrap:wrap}
+ #nl-popup .nlp-toolbar .nlp-kicker{font-size:.65rem}
+ #nl-popup .nlp-hero img{min-height:280px}
+}
+@media(prefers-reduced-motion:reduce){#nl-popup *,#nl-popup *::before,#nl-popup *::after{animation:none!important;transition:none!important}}
+</style>
+<script>
+(()=>{
+ 'use strict';
+ const root=document.getElementById('nl-popup');
+ if(!root||root.dataset.ready)return;
+ root.dataset.ready='true';
+ const $=s=>root.querySelector(s),dialog=$('dialog'),status=$('[data-nlp-status]');
+ const FEED='https://rhyen-jivan-affinitiplus.github.io/Affiniti-Substack-Feed/preview/feed.json';
+ const HOST='https://affinitiplus.substack.com';
+ let feed=null,series=[],active=null,postIndex=0,view='series',opener=null,frame=null,frameTimer=null,busy=false,savedOverflow='';
+ function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+ function imageURL(value){
+   if(!value)return null;
+   try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&
+    ['substackcdn.com','substack-post-media.s3.amazonaws.com'].includes(u.hostname)?u.href:null;}catch{return null;}
+ }
+ function validate(f){
+   if(!f||f.schema_version!==1||f.mode!=='display_preview'||f.ready!==true||
+     !Array.isArray(f.tags)||f.tags.length>200||!Array.isArray(f.articles)||!f.articles.length||f.articles.length>1000)throw Error('feed_invalid');
+   const tags=new Set(),ids=new Set(),urls=new Set();
+   f.tags.forEach(t=>{if(!t||typeof t.id!=='string'||!t.id||typeof t.name!=='string'||!t.name||t.name.length>500||
+     typeof t.slug!=='string'||! /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(t.slug)||tags.has(t.id))throw Error('tag_invalid');tags.add(t.id);});
+   f.articles.forEach(p=>{
+     if(!p||!Number.isSafeInteger(p.id)||p.id<=0||ids.has(p.id)||urls.has(p.canonical_url)||
+      typeof p.canonical_url!=='string'||!/^https:\/\/affinitiplus\.substack\.com\/p\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.canonical_url)||
+      typeof p.title!=='string'||!p.title||p.title.length>4096||typeof p.subtitle!=='string'||p.subtitle.length>4096||
+      typeof p.published_at!=='string'||!Number.isFinite(Date.parse(p.published_at))||
+      !Array.isArray(p.authors)||!p.authors.length||p.authors.length>100||!p.authors.every(a=>typeof a==='string'&&a.length>0&&a.length<=500)||
+      !Array.isArray(p.tag_ids)||!p.tag_ids.length||!p.tag_ids.every(id=>tags.has(id)))throw Error('post_invalid');
+     ids.add(p.id);urls.add(p.canonical_url);
+   });return f;
+ }
+ function date(p){return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/London'}).format(new Date(p.published_at));}
+ function posts(){return active.posts.slice().sort((a,b)=>($('[data-nlp-order]').value==='oldest'?1:-1)*(Date.parse(a.published_at)-Date.parse(b.published_at))||a.id-b.id);}
+ function clearMedia(){clearTimeout(frameTimer);frame=null;$('[data-nlp-embed]').replaceChildren();const img=$('[data-nlp-image]');img.onload=img.onerror=null;img.removeAttribute('src');$('[data-nlp-hero]').hidden=true;$('[data-nlp-embed-status]').textContent='';}
+ function tile(p,s){
+   const b=node('button',undefined,'nlp-tile');b.type='button';b.setAttribute('aria-haspopup','dialog');
+   b.append(node('span',date(p),'nlp-count'),node('h3',p.title),node('span','View article ↗','nlp-tile-link'));
+   b.addEventListener('click',()=>openArticle(s,p.id,b));return b;
+ }
+ function chooseSeries(s){active=s;clearMedia();view='series';dialog.setAttribute('aria-labelledby','nlp-title');
+   $('[data-nlp-series-view]').hidden=false;$('[data-nlp-article-view]').hidden=true;$('[data-nlp-back]').hidden=true;
+   $('#nlp-title').textContent=s.name;$('[data-nlp-count]').textContent=s.posts.length+' collected articles';
+   $('[data-nlp-tabs]').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===s.id)));
+   const grid=$('[data-nlp-grid]');grid.replaceChildren(...posts().map(p=>tile(p,s)));
+ }
+ function show(trigger){if(dialog.open)return;opener=trigger||document.activeElement;
+   savedOverflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
+   dialog.showModal();
+ }
+ function openSeries(s,trigger){chooseSeries(s);show(trigger);$('#nlp-title').focus();}
+ function official(p){
+   const host=$('[data-nlp-embed]'),f=document.createElement('iframe');
+   f.title='Substack article: '+p.title;f.height='470';f.referrerPolicy='strict-origin-when-cross-origin';
+   f.setAttribute('sandbox','allow-scripts allow-same-origin allow-top-navigation-by-user-activation allow-popups');
+   const u=new URL('/embed'+new URL(p.canonical_url).pathname,HOST);
+   u.searchParams.set('origin',location.origin);u.searchParams.set('fullURL',location.origin+location.pathname);
+   frame=f;f.src=u.href;host.replaceChildren(f);
+   $('[data-nlp-embed-status]').textContent='Loading article card…';
+   frameTimer=setTimeout(()=>{if(frame===f)$('[data-nlp-embed-status]').textContent='If the card is unavailable, use Read on Substack below.';},12000);
+ }
+ function renderArticle(){
+   clearMedia();const list=posts(),p=list[postIndex];view='article';
+   dialog.setAttribute('aria-labelledby','nlp-article-title');$('[data-nlp-series-view]').hidden=true;
+   $('[data-nlp-article-view]').hidden=false;$('[data-nlp-back]').hidden=false;
+   $('[data-nlp-position]').textContent=active.name+' · '+(postIndex+1)+' / '+list.length;
+   const title=$('#nlp-article-title');title.textContent=p.title;title.classList.remove('nlp-sr');
+   $('[data-nlp-summary]').textContent=p.subtitle;$('[data-nlp-summary]').hidden=!p.subtitle.trim();
+   $('[data-nlp-authors]').textContent=p.authors.join(', ');
+   const time=$('[data-nlp-date]');time.dateTime=p.published_at;time.textContent=date(p);
+   $('[data-nlp-tags]').replaceChildren(...feed.tags.filter(t=>p.tag_ids.includes(t.id)).map(t=>node('li',t.name)));
+   $('[data-nlp-read]').href=p.canonical_url;
+   $('[data-nlp-prev]').disabled=postIndex===0;$('[data-nlp-next]').disabled=postIndex===list.length-1;
+   const src=imageURL(p.image_url),img=$('[data-nlp-image]');
+   if(src){img.onload=()=>{$('[data-nlp-hero]').hidden=false;title.classList.add('nlp-sr');};
+     img.onerror=()=>{img.removeAttribute('src');official(p);};
+     $('[data-nlp-overlay-title]').textContent=p.title;img.src=src;
+   }else official(p);
+   $('.nlp-content').scrollTop=0;dialog.scrollTop=0;
+ }
+ function openArticle(s,id,trigger){active=s;postIndex=posts().findIndex(p=>p.id===id);if(postIndex<0)return;renderArticle();show(trigger);$('#nlp-article-title').focus();}
+ function launchers(){
+   const nav=$('[data-nlp-series]'),tabs=$('[data-nlp-tabs]');nav.replaceChildren();tabs.replaceChildren();
+   series.forEach(s=>{
+     const b=node('button',s.name+' · '+s.posts.length);b.type='button';b.setAttribute('aria-haspopup','dialog');b.onclick=()=>openSeries(s,b);nav.append(b);
+     const tab=node('button',s.name);tab.type='button';tab.dataset.id=s.id;tab.onclick=()=>{chooseSeries(s);$('#nlp-title').focus();};tabs.append(tab);
+   });
+   const latest=feed.articles.slice().sort((a,b)=>Date.parse(b.published_at)-Date.parse(a.published_at)||a.id-b.id).slice(0,3);
+   $('[data-nlp-latest]').replaceChildren(...latest.map(p=>tile(p,series.find(s=>p.tag_ids.includes(s.id)))));
+   $('[data-nlp-browse]').disabled=false;
+ }
+ async function load(){
+   if(busy)return;busy=true;$('[data-nlp-retry]').hidden=true;
+   const abort=new AbortController(),timer=setTimeout(()=>abort.abort(),15000);
+   try{const r=await fetch(FEED,{credentials:'omit',cache:'no-cache',signal:abort.signal});
+     if(!r.ok||!(r.headers.get('content-type')||'').includes('application/json'))throw Error('response');
+     const raw=await r.text();if(raw.length>500000)throw Error('size');feed=validate(JSON.parse(raw));
+     series=feed.tags.map(t=>({...t,posts:feed.articles.filter(p=>p.tag_ids.includes(t.id))})).filter(s=>s.posts.length);
+     series.sort((a,b)=>Math.max(...b.posts.map(p=>Date.parse(p.published_at)))-Math.max(...a.posts.map(p=>Date.parse(p.published_at)))||a.name.localeCompare(b.name,'en'));
+     if(!series.length)throw Error('empty');launchers();
+     status.textContent=Date.now()-Date.parse(feed.collected_at)>172800000?'Showing the last available collection.':'';
+   }catch{status.textContent='The collection could not load. You can still browse Substack below.';$('[data-nlp-retry]').hidden=false;}
+   finally{clearTimeout(timer);busy=false;}
+ }
+ $('[data-nlp-browse]').onclick=e=>{if(series.length)openSeries(series[0],e.currentTarget);};
+ $('[data-nlp-close]').onclick=()=>dialog.close();
+ $('[data-nlp-back]').onclick=()=>{chooseSeries(active);$('#nlp-title').focus();};
+ $('[data-nlp-order]').onchange=()=>chooseSeries(active);
+ $('[data-nlp-retry]').onclick=load;
+ $('[data-nlp-prev]').onclick=()=>{if(postIndex>0){postIndex--;renderArticle();$('#nlp-article-title').focus();}};
+ $('[data-nlp-next]').onclick=()=>{if(postIndex<posts().length-1){postIndex++;renderArticle();$('#nlp-article-title').focus();}};
+ dialog.addEventListener('close',()=>{clearMedia();document.documentElement.style.overflow=savedOverflow;if(opener?.isConnected)opener.focus();});
+ dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close();});
+ window.addEventListener('message',e=>{
+   if(!frame||e.origin!==HOST||e.source!==frame.contentWindow)return;
+   const v=e.data?.iframeHeight;if(typeof v!=='number'&&!(typeof v==='string'&&/^\d+(?:\.\d+)?$/.test(v)))return;
+   const h=Number(v);if(!Number.isFinite(h)||h<100||h>10000)return;
+   frame.height=String(Math.ceil(Math.min(h,1400)));clearTimeout(frameTimer);$('[data-nlp-embed-status]').textContent='';
+ });
+ document.addEventListener('click',e=>{
+   const b=e.target.closest('[data-nl-open-series],[data-nl-open-article]');if(!b||!feed)return;
+   const sk=b.getAttribute('data-nl-open-series'),pk=b.getAttribute('data-nl-open-article');
+   if(pk){const p=feed.articles.find(p=>String(p.id)===pk||p.canonical_url===pk);
+     if(p){e.preventDefault();openArticle(series.find(s=>p.tag_ids.includes(s.id)),p.id,b);}}
+   else{const s=series.find(s=>s.id===sk||s.slug===sk);if(s){e.preventDefault();openSeries(s,b);}}
+ });
+ load();
+})();
+</script>
+</body></html>
