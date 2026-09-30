@@ -1,8 +1,8 @@
-# Newsletter popup v3
+# Newsletter popup v4
 
 ## Style Prompt
 An editorial Affiniti+ collection: cream canvas, cocoa text, Adonis headlines,
-compact series capsules and quiet article tiles. Clicking opens a focused native
+compact series capsules and image-led article tiles with readable title overlays. Clicking opens a focused native
 dialog, with a series collection view and an article detail view. Avoid the old
 large split panel and empty fixed-height reader. Preserve actual article copy.
 
@@ -29,3 +29,6 @@ Static layout first, then a single short opacity/translation entrance and restra
 tile hover lift. Reduced motion disables both. Hyperframes was reviewed: its video
 composition/timeline runtime is not appropriate for a user-operated web dialog.
 No Hyperframes, GSAP or other external animation runtime is included.
+
+## Media
+Use validated image_url from the automated feed. Render each title once visually, with description below. Missing or failed images use text-only previews. No iframe or embed-script fallback.

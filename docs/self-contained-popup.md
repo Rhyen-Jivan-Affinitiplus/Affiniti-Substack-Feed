@@ -1,4 +1,6 @@
-# Self-contained newsletter popup — 30 September 2026
+# Self-contained newsletter popup — v3 historical record
+
+This records the superseded v3 implementation. Current v4 instructions and media behaviour are in [native-media-popup.md](native-media-popup.md). Do not use the v3 iframe or installation guidance below for v4.
 
 ## Provenance and scope
 Rules reviewed: affiniti-plus-squarespace main AGENTS.md, standards/DESIGN-SYSTEM.md,

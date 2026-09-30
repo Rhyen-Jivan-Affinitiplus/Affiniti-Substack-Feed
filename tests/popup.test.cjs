@@ -21,8 +21,8 @@ for(const url of ['http://substackcdn.com/a','https://substackcdn.com.evil.test/
 assert(!/<script[^>]+src=/.test(html));assert(!/<link[^>]+stylesheet/.test(html));
 assert(!js.includes('innerHTML'));
 assert(js.includes('dialog.showModal()')&&js.includes('opener.focus()'));
-assert(js.includes('e.source!==frame.contentWindow'));
-assert(js.includes('if(!frame||e.origin!==HOST'));
+assert(!/iframe|embedjs|function official/.test(html));
+assert(js.includes('old.replaceWith(img)'));assert(js.includes("title.classList.remove('nlp-sr')"));
 assert(js.includes('clearMedia();document.documentElement.style.overflow=savedOverflow'));
 assert(html.includes('prefers-reduced-motion:reduce'));
-console.log('Popup: source syntax, feed rejection cases, image allowlist, inline assets, text-only insertion, modal and frame guards passed.');
+console.log('Popup: source syntax, feed rejection cases, image allowlist, inline assets, text-only insertion, modal, native images and no-iframe checks passed.');
