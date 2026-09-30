@@ -48,3 +48,12 @@ mobile width, keyboard closure/focus, sort order and blocked-media fallback.
 
 Scheduling, credential handling, source collection and publishing automation are
 unchanged. This display candidate does not establish production readiness.
+
+## Observed verification
+Offline popup validation and all three prior renderer test scripts passed.
+Hosted browser review confirmed seven series, six Mind the Gap posts, chronological
+sort reversal, article identity/date/link display, disabled end-of-series next,
+Back preserving series/order, iframe removal, and Escape restoring launcher focus.
+The cloud browser returned Site Unavailable inside the Substack iframe; official
+card visuals and media were not accepted from this browser. Mobile visual review,
+Squarespace embedding and the future real-image overlay remain pending.
